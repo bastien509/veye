@@ -1,0 +1,42 @@
+# Veye (petiht.com/veye)
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+
+# Pass the Authorization header (extension bearer tokens) through to PHP.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+# Schema, docs, lock files, logs and dotfiles are never served.
+<FilesMatch "\.(sql|md|lock|log|ini|sh|bak|py|cache)$|^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Hostinger's placeholder page is not part of this site.
+<Files "default.php">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</Files>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.php$">
+        Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0, private"
+        Header always unset Expires
+    </FilesMatch>
+    # Versioned static assets (?v=) can be cached for a long time.
+    <FilesMatch "\.(css|js|svg|png|woff2?)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.zip$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+</IfModule>

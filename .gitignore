@@ -1,0 +1,13 @@
+# Secrets and server state
+web/inc/config.php
+web/inc/*.lock
+web/inc/*.log
+web/inc/*.cache
+
+# Build
+client/node_modules/
+client/.stage/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,13 @@
+/* Side panel tweaks on top of the shared app.css */
+body.panel { min-height: 100vh; font-size: 15px; }
+.p-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--bg); z-index: 2; }
+.p-head .logo { width: 28px; height: 28px; }
+.p-user { font-size: .85rem; color: var(--muted); }
+.p-main { padding: 12px 14px 24px; display: grid; gap: 10px; }
+.p-main .card { padding: 14px; }
+.choices-sm { grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 8px 0; }
+.choices-sm .choice-b { padding: 8px; }
+.page-rules { font-size: .88rem; border-radius: 10px; padding: 10px 12px; background: var(--amber-soft); color: var(--amber); font-weight: 600; }
+.page-rules.is-scam { background: var(--red-soft); color: var(--cta); }
+.result-card { position: static; margin-top: 12px; }
+.empty { padding: 16px; }

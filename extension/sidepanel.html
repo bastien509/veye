@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veye</title>
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="panel.css">
+</head>
+<body class="panel">
+<header class="p-head">
+  <div class="brand"><img src="icons/48.png" alt="" class="logo"><span>Veye</span></div>
+  <div class="p-user" id="userBox" hidden><span id="userName"></span> · <button type="button" class="link-btn" id="signOut">Sign out</button></div>
+</header>
+
+<main class="p-main">
+  <form class="card" id="loginForm" hidden autocomplete="on">
+    <h2>Sign in</h2>
+    <p class="muted">Use your Veye account. Judges: <code>demo</code> / <code>VeyeDemo509</code>.</p>
+    <label class="field"><span>Username</span><input id="lu" autocomplete="username" required maxlength="40"></label>
+    <label class="field"><span>Password</span><input id="lp" type="password" autocomplete="current-password" required maxlength="200"></label>
+    <div class="flash flash-error" id="loginErr" hidden></div>
+    <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+  </form>
+
+  <section id="checker" hidden>
+    <div class="device-line" role="status"><span class="dot dot-wait" id="devDot"></span><span id="deviceText">Checking for Gemini Nano…</span></div>
+    <div class="page-rules" id="pageRules" hidden></div>
+
+    <button type="button" class="btn btn-ghost btn-block" id="grabBtn">Use this page's text</button>
+    <label class="field"><span class="sr-only">Text to check</span>
+      <textarea id="msg" rows="6" maxlength="20000" placeholder="Select text on a page and right-click → Check with Veye, or paste a message here."></textarea>
+    </label>
+    <label class="field"><span>Where you saw it</span><input id="src" maxlength="300"></label>
+
+    <div class="choices choices-sm" role="radiogroup" aria-label="Privacy mode">
+      <label class="choice"><input type="radio" name="mode" value="private"><span class="choice-b"><strong>Private</strong><small>Device only</small></span></label>
+      <label class="choice"><input type="radio" name="mode" value="smart" checked><span class="choice-b"><strong>Smart</strong><small>Device first</small></span></label>
+      <label class="choice"><input type="radio" name="mode" value="deep"><span class="choice-b"><strong>Deep</strong><small>Cloud first</small></span></label>
+    </div>
+    <label class="field field-inline"><span>Answer in</span>
+      <select id="lang"><option value="en">English</option><option value="es">Español</option><option value="fr">Français</option><option value="ht">Kreyòl</option></select>
+    </label>
+    <button type="button" class="btn btn-go btn-block" id="checkBtn">Check it</button>
+
+    <section class="card result-card" aria-live="polite">
+      <div class="empty" id="resultEmpty"><p>Your answer shows here.</p></div>
+      <div id="resultBody" hidden>
+        <div class="res-top">
+          <span class="verdict-chip" id="verdict"><span class="dot"></span><span id="verdictTxt"></span></span>
+          <span class="ran-on" id="ranOn"></span>
+        </div>
+        <progress class="meter" id="meterBar" max="100" value="0" aria-label="Risk"></progress>
+        <p class="res-type" id="resType"></p>
+        <p class="res-sum" id="resSummary"></p>
+        <h3>Red flags</h3>
+        <ul class="flags" id="resFlags"></ul>
+        <h3>What to do</h3>
+        <ol class="todo" id="resTodo"></ol>
+        <details class="trace"><summary>How Veye decided where to run</summary><ol id="trace"></ol></details>
+        <div class="res-actions">
+          <button type="button" class="btn btn-ghost btn-sm" id="reportBtn">Warn the community</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="copyBtn">Copy advice</button>
+        </div>
+      </div>
+    </section>
+  </section>
+</main>
+<script type="module" src="dist/sidepanel.js"></script>
+</body>
+</html>
