@@ -28,7 +28,7 @@ $GLOBALS['VEYE_CFG'] = (static function (): array {
     return require $file;
 })();
 
-const VEYE_ASSET_VER = '2';
+const VEYE_ASSET_VER = '5';
 const VEYE_SCHEMA_VER = '1';
 
 /** Settings an admin can change, with their defaults. Secret ones never leave the server. */

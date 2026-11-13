@@ -24,13 +24,15 @@ page_head('Community warnings', 'page-community');
 app_header($u, 'community');
 ?>
 <main class="wrap">
-  <div class="page-title">
-    <h1>Community warnings</h1>
-    <p class="section-lead">Scams people checked with Veye in the last 30 days. Reports keep only redacted text and the site's domain.</p>
+  <div class="page-hero">
+    <span class="kicker">Community</span>
+    <h1>Scams going around <span class="serif">right now.</span></h1>
+    <p class="section-lead">What people checked with Veye in the last 30 days. Shared warnings keep only redacted text and the site's domain, and are reviewed before they appear here.</p>
   </div>
   <div class="grid2 grid-top">
     <section class="card">
-      <h2>Most common this month</h2>
+      <h2 class="panel-title"><?= icon('chart') ?>Most common this month</h2>
+      <p></p>
       <?php if (!$types): ?>
         <p class="muted">No checks yet this month.</p>
       <?php else: ?>
@@ -46,7 +48,8 @@ app_header($u, 'community');
       <?php endif; ?>
     </section>
     <section class="card">
-      <h2>Stay safe</h2>
+      <h2 class="panel-title"><?= icon('shield') ?>Four rules that stop most scams</h2>
+      <p></p>
       <ul class="ticks">
         <li>No real bank, transfer service or government asks for a one-time code by text.</li>
         <li>Deadlines like "within 30 minutes" are there to stop you from thinking.</li>
@@ -57,7 +60,7 @@ app_header($u, 'community');
   </div>
 
   <section class="reports">
-    <h2>Latest warnings</h2>
+    <h2 class="panel-title"><?= icon('alert') ?>Latest warnings</h2>
     <?php if (!$reports): ?>
       <p class="muted">No approved warnings yet.</p>
     <?php endif; ?>

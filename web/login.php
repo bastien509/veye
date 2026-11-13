@@ -28,22 +28,43 @@ if (is_post()) {
 page_head('Sign in', 'page-auth');
 app_header(null);
 ?>
-<main class="wrap auth-wrap">
-  <form class="card auth-card" method="post" action="<?= e(url('login.php')) ?>" autocomplete="on">
-    <?= csrf_field() ?>
-    <h1>Sign in to Veye</h1>
-    <?php if ($error !== ''): ?><div class="flash flash-error" role="alert"><?= e($error) ?></div><?php endif; ?>
-    <label class="field">
-      <span>Username</span>
-      <input name="username" autocomplete="username" required maxlength="40" value="<?= e($_POST['username'] ?? '') ?>">
-    </label>
-    <label class="field">
-      <span>Password</span>
-      <input name="password" type="password" autocomplete="current-password" required maxlength="200">
-    </label>
-    <button class="btn btn-primary btn-block" type="submit">Sign in</button>
-    <?= demo_card() ?>
-  </form>
+<main class="wrap auth-split">
+  <aside class="auth-art">
+    <div>
+      <?= logo_svg('logo logo-xl') ?>
+      <h2 class="mt">Before you answer, <span class="serif">veye.</span></h2>
+      <p>The scam shield that asks your own device first.</p>
+    </div>
+    <ul class="ticks">
+      <li>Gemini Nano reads the message on your device</li>
+      <li>The cloud gets redacted text only, and only when needed</li>
+      <li>Answers in English, Kreyòl, Français and Español</li>
+      <li>Veye never stores what you check</li>
+    </ul>
+    <span class="pill-mono">Firebase AI Logic · hybrid inference</span>
+  </aside>
+  <div class="auth-form">
+    <form class="auth-card" method="post" action="<?= e(url('login.php')) ?>" autocomplete="on" id="loginForm">
+      <?= csrf_field() ?>
+      <h1>Welcome back</h1>
+      <p>Sign in to check messages and pages.</p>
+      <?php if ($error !== ''): ?><div class="flash flash-error" role="alert"><?= e($error) ?></div><?php endif; ?>
+      <label class="field">
+        <span>Username</span>
+        <input name="username" id="lu" autocomplete="username" required maxlength="40" value="<?= e($_POST['username'] ?? '') ?>">
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input name="password" id="lp" type="password" autocomplete="current-password" required maxlength="200">
+      </label>
+      <button class="btn btn-primary btn-block btn-lg" type="submit">Sign in <?= icon('arrow') ?></button>
+      <div class="demo-card">
+        <strong><?= icon('sparkle', 'ico-sm') ?>Judges and testers</strong>
+        <span class="muted">Username <code>demo</code> · Password <code>VeyeDemo509</code></span>
+        <button type="button" class="btn btn-ghost btn-block" data-fill-demo>Fill in the demo account</button>
+      </div>
+    </form>
+  </div>
 </main>
 <?php
 page_foot();
