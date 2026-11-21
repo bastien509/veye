@@ -286,7 +286,8 @@ function send_security_headers(): void
         . "style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; "
         . "script-src 'self' https://www.google.com https://www.gstatic.com https://www.recaptcha.net; "
         . "frame-src https://www.google.com https://www.recaptcha.net; "
-        . "connect-src 'self' $google; form-action 'self'; frame-ancestors 'none'; "
+        // data: lets Firebase AI Logic hand a screenshot to Gemini Nano on-device (it converts images with fetch(data:...)).
+        . "connect-src 'self' data: $google; form-action 'self'; frame-ancestors 'none'; "
         . "base-uri 'self'; object-src 'none'"
     );
     header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0, private');
