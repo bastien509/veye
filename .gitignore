@@ -11,3 +11,4 @@ client/.stage/
 # OS
 .DS_Store
 Thumbs.db
+video/*.mp4

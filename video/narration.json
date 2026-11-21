@@ -1,0 +1,34 @@
+[
+ {
+  "id": "v1_hook",
+  "text": "My family sends money home to Haiti every month. Texts like this one arrive every week: your transfer is on hold, send the six-digit code in thirty minutes. The people who get them are our parents and grandparents. They need a second opinion, fast. But these are the most private messages they have."
+ },
+ {
+  "id": "v2_idea",
+  "text": "Veye, which means watch out in Haitian Kreyòl, is a scam checker that asks your own device first. It is built on Firebase AI Logic hybrid inference: local rules, then Gemini Nano on the device, and Gemini in the cloud only when it is needed, with personal data removed first."
+ },
+ {
+  "id": "v3_dash",
+  "text": "Sign in, and Veye shows the on-device model status, today's checks, scams caught, and how many personal items were kept private."
+ },
+ {
+  "id": "v4_device",
+  "text": "Here is that remittance text. Smart mode, English. Gemini Nano reads it right here in Chrome, on a laptop with no graphics card. Scam, ninety percent: a fake money transfer notice. The red flags in plain words, what to do next, and the badge: on this device, zero bytes sent. And Veye shows exactly why it ran where it did."
+ },
+ {
+  "id": "v5_kreyol",
+  "text": "Now a lottery scam in Kreyòl, with the answer in Kreyòl. Gemini Nano does not answer in Kreyòl yet, so Veye's router switches to the cloud through the same Firebase AI Logic call. But first, on the device, it removes personal data, here the sender's phone number. The badge says it: cloud, redacted."
+ },
+ {
+  "id": "v6_shot",
+  "text": "Many scams arrive as screenshots. This fake delivery text is read on the device too, with Gemini Nano's image input: a suspicious link, a tiny fee, a deadline. A screenshot cannot be redacted, so Veye never sends one to the cloud without asking first."
+ },
+ {
+  "id": "v7_ext",
+  "text": "The same engine runs in a Chrome extension: a side panel that checks the page you are on, and a warning badge from local rules on every site, with no network call at all."
+ },
+ {
+  "id": "v8_close",
+  "text": "App Check with a custom provider protects the AI, even inside the extension. Remote Config changes routing and scam patterns without a new build. And Veye stores no message and no screenshot, ever. Veye. Before you answer, ask your own device first."
+ }
+]

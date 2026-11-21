@@ -231,14 +231,16 @@ export function createEngine({ config, getAppCheckToken }) {
 
     let promptText = rawText;
     let redactedCount = 0;
+    let safeSource = source;
     if (sendRedacted) {
       const r = redact(rawText);
+      const s = redact(source); // the sender / link field is cleaned too, and counted
       promptText = r.text;
-      redactedCount = r.count;
-      trace.push(`Redacted ${r.count} personal item(s) on this device before any cloud call.`);
+      safeSource = s.text;
+      redactedCount = r.count + s.count;
+      trace.push(`Redacted ${redactedCount} personal item(s) on this device before any cloud call${s.count ? ' (including the sender)' : ''}.`);
     }
     promptText = promptText.slice(0, inferMode === InferenceMode.ONLY_ON_DEVICE || inferMode === InferenceMode.PREFER_ON_DEVICE ? DEVICE_TEXT_LIMIT : CLOUD_TEXT_LIMIT);
-    const safeSource = sendRedacted ? redact(source).text : source;
 
     const outLang = inferMode === InferenceMode.PREFER_IN_CLOUD ? lang : (langOnDevice ? lang : 'en');
     const prompt = buildPrompt({ text: promptText, source: safeSource, lang: outLang, ruleHits: rules.hits, hasImage: !!img, redacted: sendRedacted && redactedCount > 0 });

@@ -84,13 +84,15 @@ The interesting part is **Veye's router**, which picks the inference mode for ev
 - **App Check in a Chrome extension.** reCAPTCHA can't run on `chrome-extension://` pages. We built a custom App Check provider: the server signs a custom token with the service account and exchanges it with the App Check REST API, only for signed-in users and with rate limits.
 - **Keeping the cloud fallback private.** With `PREFER_ON_DEVICE` the SDK decides the fallback on its own, so the router redacts *before* every call that could reach the cloud, and sends the original text only in Private mode.
 - **False alarms.** "We will never ask for a one-time code" is a safety notice, not a red flag. The offline rules check for negations so real bank notices don't get flagged.
+- **A strict CSP blocked on-device images.** Firebase AI Logic hands a screenshot to Gemini Nano by converting it with `fetch("data:...")`; our Content-Security-Policy blocked that ("Failed to fetch"). Adding `data:` to `connect-src` fixed it.
+- **Small-model echoes.** Nano sometimes returned a redaction tag such as `[PHONE]` as a red flag. Tags are now filtered out, and the sender field is redacted and counted like the message text.
 - **One schema, two engines.** Chrome's Prompt API takes a JSON Schema `responseConstraint`, while the cloud takes a Firebase `Schema`. We keep both in step and parse the results the same way.
 
 ### Accomplishments that we're proud of
 - A real scam check, end to end, in **Haitian Kreyòl**, a language most AI products ignore, while English and Spanish checks never leave the device.
 - Veye stores **no message text and no screenshots**, ever.
 - One engine shared by the web app and the Chrome extension.
-- **[CHECK, after testing in your Chrome]** On a laptop with Gemini Nano, a full scam explanation in about X ms with 0 bytes sent.
+- **Verified on-device, nothing sent:** in Chrome on a CPU-only laptop (no graphics card), Gemini Nano judged the remittance scam text **Scam, 90%** with its red flags in 61–78 s, and read a phishing **screenshot** on-device in about 39 s, both with "On this device · 0 bytes sent". Laptops with a GPU are much faster.
 
 ### What we learned
 Hybrid inference is more than a fallback switch. It changes what an app is allowed to do. A page-reading extension is only acceptable when the reading happens locally. The cloud then becomes a deliberate, visible choice: for a language, for a long page, or when the user asks.
@@ -109,8 +111,8 @@ firebase-ai-logic, gemini-nano, gemini, firebase-app-check, firebase-remote-conf
 1. Open https://petiht.com/veye and sign in with `demo` / `VeyeDemo509`.
 2. **Cloud path (any browser):** pick a sample, such as "Kreyòl lottery", and click **Check it**. The badge reads "Cloud · … redacted".
 3. **On-device path:**
-   - Use Chrome 139+ on a desktop and enable `chrome://flags/#prompt-api-for-gemini-nano-multimodal-input`, then restart Chrome.
+   - Use a recent Chrome on a desktop (Gemini Nano needs about 22 GB of free disk and a GPU with more than 4 GB of VRAM, or 16 GB of RAM). For screenshots on older Chrome versions, enable `chrome://flags/#prompt-api-for-gemini-nano-multimodal-input` and restart Chrome.
    - Reload the page; the status line should say Gemini Nano is ready or can be downloaded. The first check starts the download.
-   - Choose **Smart** or **Private** with English or Spanish. The badge reads "On this device · 0 bytes sent".
+   - Choose **Smart** or **Private** with English or Spanish. The badge reads "On this device · 0 bytes sent". On a computer without a GPU, an on-device check can take about a minute.
 4. Open **"How Veye decided where to run"** under any result to see the routing.
 5. **Extension:** download the zip from https://petiht.com/veye/extension.php. Unzip it, then in `chrome://extensions` turn on Developer mode, choose **Load unpacked** and pick the folder. Sign in with the same demo account.

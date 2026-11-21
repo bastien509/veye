@@ -75,7 +75,9 @@ export function parseAnswer(raw) {
     risk: Math.max(0, Math.min(100, Math.round(Number(j.risk) || 0))),
     scamType: SCAM_TYPES.includes(j.scam_type) ? j.scam_type : 'other',
     summary: String(j.summary || '').slice(0, 600),
-    redFlags: (Array.isArray(j.red_flags) ? j.red_flags : []).map(String).filter(Boolean).slice(0, 5),
+    // A small model sometimes echoes a redaction tag ("[PHONE]") as a flag; a tag alone is never a warning sign.
+    redFlags: (Array.isArray(j.red_flags) ? j.red_flags : []).map((f) => String(f).trim())
+      .filter((f) => f && !/^\[?(PHONE|EMAIL|CODE|CARD|IBAN|SSN|ID|LINK|URL|NAME)\]?\.?$/i.test(f)).slice(0, 5),
     nextSteps: (Array.isArray(j.next_steps) ? j.next_steps : []).map(String).filter(Boolean).slice(0, 4),
   };
 }
